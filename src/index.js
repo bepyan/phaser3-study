@@ -4,7 +4,8 @@ import {
   configKeybard,
   configPlatforms,
   configPlayer,
-  physics,
+  configStars,
+  collectStar,
 } from "./configs";
 
 new Phaser.Game({
@@ -12,12 +13,14 @@ new Phaser.Game({
   parent: "phaser-example",
   width: 800,
   height: 600,
-  physics,
-  scene: {
-    preload: preload,
-    create: create,
-    update: update,
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { y: 300 },
+      debug: false,
+    },
   },
+  scene: { preload, create, update },
 });
 
 function preload() {
@@ -36,11 +39,13 @@ function create() {
 
   const platforms = configPlatforms(this.physics);
   const player = configPlayer(this.physics, this.anims);
+  const stars = configStars(this.physics);
 
   this.physics.add.collider(player, platforms);
+  this.physics.add.collider(stars, platforms);
+  this.physics.add.overlap(player, stars, collectStar, null, this);
 }
 
 function update() {
-  const cursors = this.input.keyboard.createCursorKeys();
-  configKeybard(cursors);
+  configKeybard(this.input.keyboard);
 }

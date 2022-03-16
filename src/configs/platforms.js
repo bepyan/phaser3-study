@@ -7,5 +7,6 @@ export const configPlatforms = (physics) => {
   platforms.create(50, 250, "ground");
   platforms.create(750, 220, "ground");
 
+  
   return platforms;
 };

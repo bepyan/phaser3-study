@@ -1,6 +1,10 @@
 import { player } from "./player";
 
-export const configKeybard = (cursors) => {
+export let cursors;
+
+export const configKeybard = (keyboard) => {
+  cursors = keyboard.createCursorKeys();
+
   if (cursors.left.isDown) {
     player.setVelocityX(-160);
     player.anims.play("left", true);
@@ -15,4 +19,6 @@ export const configKeybard = (cursors) => {
   if (cursors.up.isDown && player.body.touching.down) {
     player.setVelocityY(-330);
   }
+
+  return cursors;
 };
