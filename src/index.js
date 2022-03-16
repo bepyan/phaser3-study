@@ -7,6 +7,8 @@ import {
   configStars,
   configScoreText,
   collectStar,
+  configBombs,
+  hitBomb,
 } from "./configs";
 
 new Phaser.Game({
@@ -42,10 +44,14 @@ function create() {
   const platforms = configPlatforms.bind(this)();
   const player = configPlayer.bind(this)();
   const stars = configStars.bind(this)();
+  const bombs = configBombs.bind(this)();
 
   this.physics.add.collider(player, platforms);
   this.physics.add.collider(stars, platforms);
   this.physics.add.overlap(player, stars, collectStar, null, this);
+
+  this.physics.add.collider(bombs, platforms);
+  this.physics.add.collider(player, bombs, hitBomb, null, this);
 }
 
 function update() {
