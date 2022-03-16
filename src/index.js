@@ -5,8 +5,8 @@ import {
   configPlatforms,
   configPlayer,
   configStars,
-  collectStar,
   configScoreText,
+  collectStar,
 } from "./configs";
 
 new Phaser.Game({
@@ -39,9 +39,9 @@ function create() {
   this.add.image(400, 300, "sky");
   configScoreText.bind(this)();
 
-  const platforms = configPlatforms(this.physics);
-  const player = configPlayer(this.physics, this.anims);
-  const stars = configStars(this.physics);
+  const platforms = configPlatforms.bind(this)();
+  const player = configPlayer.bind(this)();
+  const stars = configStars.bind(this)();
 
   this.physics.add.collider(player, platforms);
   this.physics.add.collider(stars, platforms);
@@ -49,5 +49,5 @@ function create() {
 }
 
 function update() {
-  configKeybard(this.input.keyboard);
+  configKeybard.bind(this)();
 }

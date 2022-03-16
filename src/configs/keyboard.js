@@ -2,8 +2,8 @@ import { player } from "./player";
 
 export let cursors;
 
-export const configKeybard = (keyboard) => {
-  cursors = keyboard.createCursorKeys();
+export function configKeybard() {
+  cursors = this.input.keyboard.createCursorKeys();
 
   if (cursors.left.isDown) {
     player.setVelocityX(-160);
@@ -21,4 +21,4 @@ export const configKeybard = (keyboard) => {
   }
 
   return cursors;
-};
+}

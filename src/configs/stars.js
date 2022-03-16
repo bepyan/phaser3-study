@@ -2,8 +2,8 @@ import { scoreStar } from "./score";
 
 export let stars;
 
-export const configStars = (physics) => {
-  stars = physics.add.group({
+export function configStars() {
+  stars = this.physics.add.group({
     key: "star",
     repeat: 11,
     setXY: { x: 12, y: 0, stepX: 70 },
@@ -14,7 +14,7 @@ export const configStars = (physics) => {
   });
 
   return stars;
-};
+}
 
 export const collectStar = (player, star) => {
   star.disableBody(true, true);
