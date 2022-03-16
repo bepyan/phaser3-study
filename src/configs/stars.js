@@ -1,3 +1,5 @@
+import { scoreStar } from "./score";
+
 export let stars;
 
 export const configStars = (physics) => {
@@ -16,4 +18,6 @@ export const configStars = (physics) => {
 
 export const collectStar = (player, star) => {
   star.disableBody(true, true);
+
+  scoreStar();
 };

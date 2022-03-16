@@ -6,6 +6,7 @@ import {
   configPlayer,
   configStars,
   collectStar,
+  configScoreText,
 } from "./configs";
 
 new Phaser.Game({
@@ -36,6 +37,7 @@ function preload() {
 
 function create() {
   this.add.image(400, 300, "sky");
+  configScoreText.bind(this)();
 
   const platforms = configPlatforms(this.physics);
   const player = configPlayer(this.physics, this.anims);
