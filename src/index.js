@@ -1,15 +1,15 @@
 import Phaser from "phaser";
-import { Img } from "./assets";
+import { configKeyboard, configPlatforms } from "./configs";
+import { loadImages } from "./loaders";
 import {
-  configKeybard,
-  configPlatforms,
-  configPlayer,
-  configStars,
-  configScoreText,
-  collectStar,
   configBombs,
-  hitBomb,
-} from "./configs";
+  configPlayer,
+  configScoreText,
+  configStars,
+  BombsLogic,
+  StarsLogic,
+  GameLogic,
+} from "./models";
 
 new Phaser.Game({
   type: Phaser.AUTO,
@@ -27,14 +27,7 @@ new Phaser.Game({
 });
 
 function preload() {
-  this.load.image("sky", Img.sky);
-  this.load.image("ground", Img.ground);
-  this.load.image("star", Img.star);
-  this.load.image("bomb", Img.bomb);
-  this.load.spritesheet("dude", Img.dude, {
-    frameWidth: 32,
-    frameHeight: 48,
-  });
+  loadImages.bind(this)();
 }
 
 function create() {
@@ -48,12 +41,14 @@ function create() {
 
   this.physics.add.collider(player, platforms);
   this.physics.add.collider(stars, platforms);
-  this.physics.add.overlap(player, stars, collectStar, null, this);
+  this.physics.add.overlap(player, stars, StarsLogic.collectStar, null, this);
 
   this.physics.add.collider(bombs, platforms);
-  this.physics.add.collider(player, bombs, hitBomb, null, this);
+  this.physics.add.collider(player, bombs, BombsLogic.hitBomb, null, this);
 }
 
 function update() {
-  configKeybard.bind(this)();
+  if (GameLogic.isGameOver()) return;
+
+  configKeyboard.bind(this)();
 }

@@ -1,8 +1,8 @@
-import { player } from "./player";
+import { player } from "../models";
 
 export let cursors;
 
-export function configKeybard() {
+export function configKeyboard() {
   cursors = this.input.keyboard.createCursorKeys();
 
   if (cursors.left.isDown) {
