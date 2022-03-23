@@ -1,10 +1,17 @@
-import { player } from "../models";
+import { GameLogic, player } from "../models";
 
 export let cursors;
+export let keyboards = {};
 
 export function configKeyboard() {
   cursors = this.input.keyboard.createCursorKeys();
 
+  keyboards.A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+
+  return cursors;
+}
+
+export function watchKeyboard() {
   if (cursors.left.isDown) {
     player.setVelocityX(-160);
     player.anims.play("left", true);
@@ -18,6 +25,10 @@ export function configKeyboard() {
 
   if (cursors.up.isDown && player.body.touching.down) {
     player.setVelocityY(-330);
+  }
+
+  if (keyboards.A.isDown) {
+    GameLogic.toggleGravity.bind(this)();
   }
 
   return cursors;

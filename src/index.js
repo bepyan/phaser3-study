@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { configKeyboard, configPlatforms } from "./configs";
+import { configKeyboard, configPlatforms, watchKeyboard } from "./configs";
 import { loadImages } from "./loaders";
 import {
   configBombs,
@@ -9,6 +9,7 @@ import {
   BombsLogic,
   StarsLogic,
   GameLogic,
+  BASE_GRAVITY,
 } from "./models";
 
 new Phaser.Game({
@@ -19,7 +20,7 @@ new Phaser.Game({
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 300 },
+      gravity: { y: BASE_GRAVITY },
       debug: false,
     },
   },
@@ -31,6 +32,8 @@ function preload() {
 }
 
 function create() {
+  configKeyboard.bind(this)();
+
   this.add.image(400, 300, "sky");
   configScoreText.bind(this)();
 
@@ -41,7 +44,13 @@ function create() {
 
   this.physics.add.collider(player, platforms);
   this.physics.add.collider(stars, platforms);
-  this.physics.add.overlap(player, stars, StarsLogic.collectStar, null, this);
+  this.physics.add.overlap(
+    player,
+    stars,
+    StarsLogic.collectStar.bind(this),
+    null,
+    this
+  );
 
   this.physics.add.collider(bombs, platforms);
   this.physics.add.collider(player, bombs, BombsLogic.hitBomb, null, this);
@@ -50,5 +59,5 @@ function create() {
 function update() {
   if (GameLogic.isGameOver()) return;
 
-  configKeyboard.bind(this)();
+  watchKeyboard.bind(this)();
 }
