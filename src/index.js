@@ -24,7 +24,12 @@ new Phaser.Game({
       debug: false,
     },
   },
-  scene: { preload, create, update },
+  scene: {
+    preload,
+    create,
+    update,
+    extend: { mydata: { title: "중력을 거스르는 자" } },
+  },
 });
 
 function preload() {
@@ -32,6 +37,7 @@ function preload() {
 }
 
 function create() {
+  console.log(this.mydata);
   configKeyboard.bind(this)();
 
   this.add.image(400, 300, "sky");
